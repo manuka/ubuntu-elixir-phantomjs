@@ -11,6 +11,7 @@ RUN apt-get update; \
  dpkg -i erlang-solutions_${ERLANG_VERSION}_all.deb; \
  apt-get update; \
  apt-get install -y --no-install-recommends \
+ git \
  esl-erlang \
  elixir \
  postgresql-client \
