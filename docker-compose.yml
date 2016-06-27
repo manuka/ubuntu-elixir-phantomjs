@@ -1,0 +1,13 @@
+app:
+  build: .
+  volumes:
+    - .:/app
+  links:
+    - db
+
+db:
+  image: postgres
+  ports:
+    - 5432
+  environment:
+    - POSTGRES_PASSWORD=postgres
