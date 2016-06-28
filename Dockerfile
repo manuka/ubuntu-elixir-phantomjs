@@ -1,8 +1,6 @@
 FROM ubuntu:xenial
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV ERLANG_REPO_PKG_VERSION 1.0
-ENV ERLANG_PKG_VERSION 1:18.3.4
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -15,9 +13,13 @@ RUN apt-get update; \
  curl \
  git \
  ca-certificates \
- build-essential; \
- \
- curl -O https://packages.erlang-solutions.com/erlang-solutions_${ERLANG_REPO_PKG_VERSION}_all.deb; \
+ build-essential;
+
+ENV ERLANG_REPO_PKG_VERSION 1.0
+ENV ERLANG_PKG_VERSION 1:18.3.4
+ENV PHANTOMJS_VERSION 2.1.1
+
+RUN curl -O https://packages.erlang-solutions.com/erlang-solutions_${ERLANG_REPO_PKG_VERSION}_all.deb; \
  \
  dpkg -i erlang-solutions_${ERLANG_REPO_PKG_VERSION}_all.deb; \
  apt-get update; \
@@ -25,7 +27,9 @@ RUN apt-get update; \
  esl-erlang=${ERLANG_PKG_VERSION} \
  elixir \
  postgresql-client \
- phantomjs; \
+ fontconfig; \
+ \
+ curl -L https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${PHANTOMJS_VERSION}-linux-x86_64.tar.bz2 | tar -jxf - --strip-components=2 -C /usr/local/bin/ phantomjs-${PHANTOMJS_VERSION}-linux-x86_64/bin/; \
  \
  rm -rf /var/lib/apt/lists/*;
 
